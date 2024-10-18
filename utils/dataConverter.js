@@ -44622,17 +44622,42 @@ let allMappedProducts = '';
 
 const mapper = (products, category) => {
     products.forEach(item => {
-        const { amwaySize, code, alias, name, price, retailPrice, images, variantMatrix } = item;
+        const { amwaySize, code, alias, name, price, retailPrice, images, variants, variantMatrix } = item;
         const newItem = {
             amwaySize,
             code,
             alias,
             name,
-            'price': price.value,
-            'retailPrice': retailPrice.value,
-            images,
-            variantMatrix
+            price: price.value,
+            retailPrice: retailPrice.value,
+            images
         };
+        const hashVariantMatrix = variantMatrix.reduce((hash, item) => {
+            const lynxName = item.variantValueCategory?.name;
+            const { lynxColorCode, code } = item.variantOption;
+            hash[code] = { lynxName, lynxColorCode };
+            return hash
+        }, {});
+
+        if (variants) {
+            newItem.variants = variants.map(variant => {
+                const { amwaySize, code, alias, name, price, retailPrice, images, lynxPicture } = variant;
+                const { lynxName, lynxColorCode } = hashVariantMatrix[code];
+
+                return {
+                    amwaySize,
+                    code,
+                    alias,
+                    name,
+                    price: price.value,
+                    retailPrice: retailPrice.value,
+                    images,
+                    lynxPicture,
+                    lynxColorCode,
+                    lynxName
+                }
+            });
+        }
 
         allMappedProducts += `${JSON.stringify(newItem)}\n`;
 
