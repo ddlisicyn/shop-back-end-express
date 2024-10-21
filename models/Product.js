@@ -1,4 +1,4 @@
-const { Schema, model } = required('mongoose');
+const { Schema, model } = require('mongoose');
 
 const imageSchema = new Schema({
     imageType: {type: String, required: true},
@@ -29,8 +29,9 @@ const productSchema = new Schema({
     images: {type: [imageSchema], required: true},
     lynxPicture: {type: lynxPictureSchema, required: false},
     lynxColorCode: {type: String, required: false},
-    lynxName: {type: String, required: true},
-    variant: {type: [productSchema], required: false}
+    lynxName: {type: String, required: false},
 });
+
+productSchema.add({variant: {type: [productSchema], required: false}});
 
 module.exports = model('Product', productSchema);
