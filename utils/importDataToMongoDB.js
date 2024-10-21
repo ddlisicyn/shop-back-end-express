@@ -13,11 +13,19 @@ fs.readFile(path.join(__dirname, 'db.json'), 'utf-8', async (err, data) => {
     }
 
     mongoose.connect(mongoUri);
-
-    Promise.all(JSON.parse(data).map(async row => await Product.create(row)))
+    mongoose.connection.collections['products'].drop()
         .then(() => {
-            console.log('Все изменения успешно записаны!');
-            mongoose.disconnect();
+            console.log('Коллекция успешно удалена!');
+            writeDataToMongoDB();
         })
-        .catch((err) => console.error(err.message));
+        .catch((err) => `Что-то пошло не так ${err.message}`);
+
+    function writeDataToMongoDB() {
+        Promise.all(JSON.parse(data).map(async row => await Product.create(row)))
+            .then(() => {
+                console.log('Все изменения успешно записаны!');
+                mongoose.disconnect();
+            })
+            .catch((err) => console.error(err.message));
+    }
 });

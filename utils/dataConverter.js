@@ -44618,7 +44618,7 @@ const beautyProductsCodes = [];
 const personalCareCodes = [];
 const homeProductsCodes = [];
 const moreProductsCodes = [];
-const allMappedProducts = [];
+const allHashedProducts = {};
 
 const mapper = (products, category) => {
     products.forEach(item => {
@@ -44659,7 +44659,7 @@ const mapper = (products, category) => {
             });
         }
 
-        allMappedProducts.push(newItem);
+        allHashedProducts[newItem.code] = newItem;
 
         switch(category) {
             case('nutrition'):
@@ -44690,7 +44690,7 @@ mapper(moreProducts, 'more');
 const fs = require('fs');
 const path = require('path');
 
-fs.writeFile(path.join(__dirname, 'db.json'), JSON.stringify(allMappedProducts), (err) => {
+fs.writeFile(path.join(__dirname, 'db.json'), JSON.stringify(Object.values(allHashedProducts)), (err) => {
     if (err) {
         console.error(err.message);
     }

@@ -22,7 +22,7 @@ const lynxPictureSchema = new Schema({
 const productSchema = new Schema({
     amwaySize: {type: String, required: false },
 	code: {type: String, required: true, unique: true},
-    alias: {type: String, require: false, unique: true},
+    alias: {type: String, required: false, unique: true},
 	name: {type: String, required: true},
     price: {type: Number, required: true},
     retailPrice: {type: Number, required: true},
