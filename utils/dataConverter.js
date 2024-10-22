@@ -44619,15 +44619,21 @@ const personalCareCodes = [];
 const homeProductsCodes = [];
 const moreProductsCodes = [];
 const allHashedProducts = {};
+mapper(nutritionProducts, 'nutrition');
+mapper(beautyProducts, 'beauty');
+mapper(personalCareProducts, 'personalCare');
+mapper(homeProducts, 'home');
+mapper(moreProducts, 'more');
 
-const mapper = (products, category) => {
+
+function mapper(products, category) {
     products.forEach(item => {
         const { amwaySize, code, alias, name, price, retailPrice, images, variants, variantMatrix } = item;
         const newItem = {
             amwaySize,
             code,
             alias,
-            name,
+            name: corrector(name),
             price: price.value,
             retailPrice: retailPrice.value,
             images
@@ -44648,7 +44654,7 @@ const mapper = (products, category) => {
                     amwaySize,
                     code,
                     alias,
-                    name,
+                    name: corrector(name),
                     price: price.value,
                     retailPrice: retailPrice.value,
                     images,
@@ -44680,11 +44686,21 @@ const mapper = (products, category) => {
     });
 }
 
-mapper(nutritionProducts, 'nutrition');
-mapper(beautyProducts, 'beauty');
-mapper(personalCareProducts, 'personalCare');
-mapper(homeProducts, 'home');
-mapper(moreProducts, 'more');
+function corrector(prop) {
+    return prop.replaceAll('Nutrilite', '').replaceAll('L.O.C.', '').replaceAll('SA8', '')
+        .replaceAll('AMWAY HOME', '').replaceAll('GREEN MEADOWS', '').replaceAll('DISH DROPS', '').replaceAll('SCRUB BUDS', '')
+        .replaceAll('DOUBLE X', '').replaceAll('BALANCE WITHIN', '')
+        .replaceAll('Nutrilite', '').replaceAll('TRUVIVITY by NUTRILITE', '').replaceAll('XS', '')
+        .replaceAll('HYMM', '').replaceAll('MEN Unknown', '').replaceAll('ARTISTRY SKIN NUTRITION', '')
+        .replaceAll('ARTISTRY INTENSIVE SKINCARE', '').replaceAll('G&H', '').replaceAll('NOURISH+', '')
+        .replaceAll('REFRESH+', '').replaceAll('PROTECT+', '').replaceAll('SATINIQUE', '')
+        .replaceAll('Glister', '').replaceAll('ZOOM', '').replaceAll('ARTISTRY IDEAL RADIANCE', '')
+        .replaceAll('ARTISTRY GO VIBRANT', '').replaceAll('ARTISTRY EXACT FIT', '').replaceAll('ARTISTRY SIGNATURE COLOR', '')
+        .replaceAll('ARTISTRY SIGNATURE SELECT', '').replaceAll('ARTISTRY STUDIO', '').replaceAll('ARTISTRY SUPREME LX', '')
+        .replaceAll('ARTISTRY YOUTH XTEND', '').replaceAll('eSpring', '').replaceAll('iCook', '').replaceAll('XS', '')
+        .replaceAll('ARTISTRY', '').replaceAll('AMWAY', '').replaceAll('Amway', '').replaceAll('NUTRILITE', '')
+        .replaceAll('™', '').replace(/\s+/g, ' ').trim();
+}
 // console.log(nutritionProductsCodes.length, beautyProductsCodes.length, personalCareCodes.length, homeProductsCodes.length, moreProductsCodes.length)
 
 const fs = require('fs');

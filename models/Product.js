@@ -22,7 +22,7 @@ const lynxPictureSchema = new Schema({
 const productSchema = new Schema({
     amwaySize: {type: String, required: false },
 	code: {type: String, required: true, unique: true},
-    alias: {type: String, required: false, unique: true},
+    alias: {type: String, required: false, unique: false},
 	name: {type: String, required: true},
     price: {type: Number, required: true},
     retailPrice: {type: Number, required: true},
@@ -32,6 +32,6 @@ const productSchema = new Schema({
     lynxName: {type: String, required: false},
 });
 
-productSchema.add({variant: {type: [productSchema], required: false}});
+productSchema.add({variants: {type: [productSchema], required: false}});
 
 module.exports = model('Product', productSchema);
