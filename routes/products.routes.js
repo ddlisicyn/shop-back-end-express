@@ -2,11 +2,18 @@ const { Router } = require('express');
 const Product = require('../models/Product');
 const router = Router();
 
-router.get('/', async (_, response) => {
+const getOptions = (page = 1) => ({
+	page,
+	limit: 20
+});
+
+router.get('/', async (req, response) => {
+	const { page } = req.query;
 	try {
-		const products = await Product.find();
+		const products = await Product.paginate({}, getOptions(page));
 		response.json(products);
 	} catch(e) {
+		console.log(e)
 		response.status(500).json({ message: "Что-то пошло не так, попробуйте снова" });
 	}
 });
