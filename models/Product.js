@@ -27,6 +27,7 @@ const productSchema = new Schema({
 	name: {type: String, required: true},
     price: {type: Number, required: true},
     retailPrice: {type: Number, required: true},
+    category: { type: String, required: true },
     images: {type: [imageSchema], required: true},
     lynxPicture: {type: lynxPictureSchema, required: false},
     lynxColorCode: {type: String, required: false},
