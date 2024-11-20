@@ -44621,7 +44621,7 @@ const moreProductsCodes = [];
 const allHashedProducts = {};
 mapper(nutritionProducts, 'nutrition');
 mapper(beautyProducts, 'beauty');
-mapper(personalCareProducts, 'personalCare');
+mapper(personalCareProducts, 'personal-care');
 mapper(homeProducts, 'home');
 mapper(moreProducts, 'more');
 
@@ -44636,6 +44636,7 @@ function mapper(products, category) {
             name: corrector(name),
             price: price.value,
             retailPrice: retailPrice.value,
+            category,
             images
         };
         const hashVariantMatrix = variantMatrix.reduce((hash, item) => {
@@ -44657,6 +44658,7 @@ function mapper(products, category) {
                     name: corrector(name),
                     price: price.value,
                     retailPrice: retailPrice.value,
+                    category,
                     images,
                     lynxPicture,
                     lynxColorCode,
@@ -44674,7 +44676,7 @@ function mapper(products, category) {
             case('beauty'):
                 beautyProductsCodes.push(code);
                 break;
-            case('personalCare'):
+            case('personal-care'):
                 personalCareCodes.push(code);
                 break;
             case('home'):
@@ -44682,6 +44684,7 @@ function mapper(products, category) {
                 break;
             default:
                 moreProductsCodes.push(code);
+                newItem.category = 'more';
         }
     });
 }
