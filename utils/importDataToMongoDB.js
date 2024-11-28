@@ -26,6 +26,6 @@ fs.readFile(path.join(__dirname, 'db.json'), 'utf-8', async (err, data) => {
                 console.log('Все изменения успешно записаны!');
                 mongoose.disconnect();
             })
-            .catch((err) => console.error(err.message));
+            .catch((err) => console.error(err));
     }
 });
