@@ -44637,7 +44637,8 @@ function mapper(products, category) {
             price: price.value,
             retailPrice: retailPrice.value,
             category,
-            images
+            images,
+            visable: true
         };
         const hashVariantMatrix = variantMatrix.reduce((hash, item) => {
             const lynxName = item.variantValueCategory?.name;
@@ -44648,10 +44649,17 @@ function mapper(products, category) {
 
         if (variants) {
             newItem.variants = variants.map(variant => {
-                const { amwaySize, code, alias, name, price, retailPrice, images, lynxPicture } = variant;
+                const { amwaySize, code, alias, name, price, retailPrice, lynxPicture } = variant;
                 const { lynxName, lynxColorCode } = hashVariantMatrix[code];
-
-                return {
+                const modifiedLynxPicture = () => {
+                    return lynxPicture.renditions.map(picture => ({
+                        imageType: picture.renditionType,
+                        format: picture.renditionType,
+                        url: picture.url,
+                        width: picture.assetFormat.width
+                    }));
+                }
+                const result = {
                     amwaySize,
                     code,
                     alias,
@@ -44659,11 +44667,19 @@ function mapper(products, category) {
                     price: price.value,
                     retailPrice: retailPrice.value,
                     category,
-                    images,
-                    lynxPicture,
+                    images: modifiedLynxPicture(),
                     lynxColorCode,
                     lynxName
-                }
+                };
+                
+                newItem.images = modifiedLynxPicture();
+
+                return result;
+            });
+
+            newItem.variants.forEach(variant => {
+                console.log(variant.code)
+                allHashedProducts[variant.code] = { ...variant, variants: newItem.variants, visable: false };
             });
         }
 
