@@ -44638,7 +44638,7 @@ function mapper(products, category) {
             retailPrice: retailPrice.value,
             category,
             images,
-            visable: true
+            visible: true
         };
         const hashVariantMatrix = variantMatrix.reduce((hash, item) => {
             const lynxName = item.variantValueCategory?.name;
@@ -44678,8 +44678,7 @@ function mapper(products, category) {
             });
 
             newItem.variants.forEach(variant => {
-                console.log(variant.code)
-                allHashedProducts[variant.code] = { ...variant, variants: newItem.variants, visable: false };
+                allHashedProducts[variant.code] = { ...variant, variants: newItem.variants, visible: false };
             });
         }
 

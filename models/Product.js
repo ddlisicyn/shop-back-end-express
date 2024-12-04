@@ -19,10 +19,10 @@ const productSchema = new Schema({
     images: {type: [imageSchema], required: true},
     lynxColorCode: {type: String, required: false},
     lynxName: {type: String, required: false},
-    visable: {type: Boolean, required: true}
+    visible: {type: Boolean, required: true}
 });
 
-const variantSchema = productSchema.omit(['visable']);
+const variantSchema = productSchema.omit(['visible']);
 
 productSchema.add({variants: {type: [variantSchema], required: false}});
 productSchema.plugin(mongoosePaginate);
