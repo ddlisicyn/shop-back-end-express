@@ -9,7 +9,9 @@ const getOptions = (page = 1) => ({
 
 router.get('/', async (req, response) => {
 	const { page, category } = req.query;
-	const query = {};
+	const query = {
+		visible: true
+	};
 
 	if (category && category !== 'all') {
 		query.category = category;
@@ -30,7 +32,8 @@ router.get('/detail/:id', async (request, response) => {
 	console.log(id)
 
 	try {
-		const product = await Product.find({ code: id });
+		const product = await Product.findOne({ code: id });
+		console.log(product)
 		response.json(product);
 	} catch(e) {
 		response.status(500).json({ message: "Что-то пошло не так, попробуйте снова" });
